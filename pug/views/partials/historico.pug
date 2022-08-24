@@ -1,0 +1,17 @@
+div 
+    h2(style="color:crimson;") Historial 
+    if productos.length > 0 
+        div(class="table-responsive")
+            table(class="table table-dark")
+                tr(style="color: yellow;")
+                    th Nombre 
+                    th Precio 
+                    th Icono 
+                each producto in productos
+                    tr 
+                        td=producto.title 
+                        td=producto.price   
+                        td 
+                            img(width="30" src=producto.thumbnail)
+    else 
+        h3(class="alert alert-warning")='No se encotraron productos'

@@ -1,0 +1,2 @@
+Para mi proyecto elegire utilizar pug, ya que me resulto el mas sencillo
+de escribir y comprender. Es bastante limpio, lo que hace que sea mas facil encontrar errores y leer el codigo.

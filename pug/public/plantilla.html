@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Importando bootstrap -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+        integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container mt-3">
+        <div class="jumbotron">
+
+        <!-- Formulario -->
+            <h1 style="color:blue;">Ingrese datos</h1>
+            <br>
+            <form action="/personas" method="post">
+                <div class="form-group">
+                    <label for="nombre"><b>Nombre</b></label>
+                    <input id="nombre" class="form-control" type="text" name="nombre" onchange="">
+                </div>
+                <div class="form-group">
+                    <label for="apellido"><b>Apellido</b></label>
+                    <input id="apellido" class="form-control" type="text" name="apellido">
+                </div>
+                <div class="form-group">
+                    <label for="edad"><b>Edad</b></label>
+                    <input id="edad" class="form-control" type="number" name="edad">
+                </div>
+                <button class="btn btn-success mt-3 mb-5">Enviar</button>
+            </form>
+            <!-- Final Formulario -->
+
+        </div>
+        <!-- Tabla -->
+        <div>
+            <h2 style="color:crimson;">Historial</h2>
+            <div class="table-responsive">
+                <table class="table table-dark">
+                    <tr style="color: yellow;"> <th>Nombre</th> <th>Apellido</th> <th>Edad</th> </tr>
+                    <tr>
+                        <td>Alicia</td>
+                        <td>Rinaldi</td>
+                        <td>18</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

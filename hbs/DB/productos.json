@@ -1,0 +1,20 @@
+[
+  {
+    "title": "Armonica",
+    "price": 45,
+    "thumbnail": "https://cdn2.iconfinder.com/data/icons/music-flat-pixel-perfect/64/music-48-256.png",
+    "id": 2
+  },
+  {
+    "title": "Calculadora",
+    "price": "2392",
+    "thumbnail": "https://cdn3.iconfinder.com/data/icons/education-209/64/calculator-math-tool-school-512.png",
+    "id": 3
+  },
+  {
+    "title": "camara",
+    "price": "2932",
+    "thumbnail": "https://cdn1.iconfinder.com/data/icons/journalist-4/64/photo-camera-device-capture-image-256.png",
+    "id": 4
+  }
+]
