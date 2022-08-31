@@ -2,17 +2,18 @@
             <h2 style="color:crimson;">Historial</h2>
 
         {{#if productos}}
-            <div class="table-responsive">
+            <div class="table-responsive" >
                 <table class="table table-dark">
                     <tr style="color: yellow;"> <th>Nombre</th> <th>Precio</th> <th>Icono</th> </tr>
                     {{#each productos}}
-                    <tr>
+                    <tr id="listadoProductos">
                         <td>{{this.title}}</td>
                         <td>{{this.price}}</td>
                         <td>
                             <img width="30" src="{{this.thumbnail}}" alt="">
                         </td>
                     </tr>
+                    
                     {{/each}}
                 </table>
             </div>
