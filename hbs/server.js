@@ -16,18 +16,9 @@ const io = new IOServer(httpServer)
 const contenedor = new Contenedor('./DB/productos.json')
 
 const DB_MENSAJES = [
-    {author: "juan", text: "Hola"},
-    {author: "diego", text: "Hola"},
-    {author: "juan", text: "Hola"}
 ]
 
 const DB_PRODUCTOS = [
-    {
-        "title": "PINCHILA",
-        "price": "2932",
-        "thumbnail": "https://cdn1.iconfinder.com/data/icons/journalist-4/64/photo-camera-device-capture-image-256.png",
-        "id": 4
-      }
     
 ]
 
@@ -87,10 +78,10 @@ io.on('connection', (socket)=>{
         io.sockets.emit('from-server-mensajes', DB_MENSAJES);
     })
 
-    io.sockets.emit('from-server-productos', DB_PRODUCTOS)
+    // io.sockets.emit('from-server-productos', DB_PRODUCTOS)
 
-    socket.on('from-client-producto', producto =>{
-        DB_PRODUCTOS.push(producto);
-        io.sockets.emit('from-server-productos', DB_PRODUCTOS)
-    })
+    // socket.on('from-client-producto', producto =>{
+    //     DB_PRODUCTOS.push(producto);
+    //     io.sockets.emit('from-server-productos', DB_PRODUCTOS)
+    // })
 })
