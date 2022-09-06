@@ -19,7 +19,6 @@ const DB_MENSAJES = [
 ]
 
 const DB_PRODUCTOS = [
-    
 ]
 
 // ---------------------------- Middlewares ----------------------------
@@ -42,16 +41,18 @@ app.set('view engine', 'hbs');
 
 
 // ---------------------------- Rutas ----------------------------
-app.get('/', async (req, res) => {
-    const productos = await contenedor.getAll()
-    return res.render('vista', {productos})
+app.get('/',  (req, res) => {
+    // DB_PRODUCTOS = await contenedor.getAll()
+    return res.render('vista')
 });
 
-app.post('/productos', async (req, res) =>{
-    contenedor.save(await req.body)
-    console.log(contenedor.getAll())
-    res.redirect('/')
-})
+// app.post('/productos', async (req, res) =>{
+//     contenedor.save(await req.body)
+
+//     DB_PRODUCTOS = await contenedor.getAll()
+    
+//     res.redirect('/')
+// })
 
 
 
@@ -71,17 +72,17 @@ const server = httpServer.listen(PORT, () =>  {
 io.on('connection', (socket)=>{
     console.log(`Nuevo cliente conectado! ${socket.id}`);
 
-    io.sockets.emit('from-server-mensajes', DB_MENSAJES)
+    io.emit('from-server-mensajes', DB_MENSAJES)
 
     socket.on('from-client-mensaje', mensaje => {
         DB_MENSAJES.push(mensaje);
-        io.sockets.emit('from-server-mensajes', DB_MENSAJES);
+        io.emit('from-server-mensajes', DB_MENSAJES);
     })
 
-    // io.sockets.emit('from-server-productos', DB_PRODUCTOS)
+    io.emit('from-server-productos', DB_PRODUCTOS)
 
-    // socket.on('from-client-producto', producto =>{
-    //     DB_PRODUCTOS.push(producto);
-    //     io.sockets.emit('from-server-productos', DB_PRODUCTOS)
-    // })
+    socket.on('from-client-producto', producto =>{
+        DB_PRODUCTOS.push(producto);
+        io.emit('from-server-productos', DB_PRODUCTOS)
+    })
 })
