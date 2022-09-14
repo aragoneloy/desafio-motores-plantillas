@@ -1,17 +1,23 @@
 {
+  "type": "module",
   "name": "hbs",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "build": "node src/batch/createTables.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "better-sqlite3": "^7.6.2",
     "express": "^4.18.1",
     "express-handlebars": "^6.0.6",
-    "socket.io": "^4.5.1"
+    "knex": "^2.3.0",
+    "mysql": "^2.18.1",
+    "socket.io": "^4.5.1",
+    "sqlite3": "^5.0.11"
   }
 }
