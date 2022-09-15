@@ -30,7 +30,7 @@ knexCliMsj.schema.dropTableIfExists('mensajes')
             table.increments('id').primary()
             table.string('author', 255).notNullable();
             table.string('text', 500).notNullable()
-            table.json('time').notNullable()
+            
             
         }) 
             .then(()=> console.log("Tabla creada"))
