@@ -2,6 +2,9 @@
 import express from 'express'
 import exphbs from 'express-handlebars'
 import path from 'path'
+import session from 'express-session';
+import dotenv from 'dotenv'
+import connectMongo from 'connect-mongo'
 import { createServer } from "http";
 import { Server } from "socket.io";
 import  ContenedorSQL  from './src/container/ContenedorSQL.js'
@@ -13,6 +16,9 @@ import generarObjetoRandom from './src/utils/objetoRandom.js';
 import ContenedorArchivo from './src/container/ContenedorArchivo.js';
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
+
+dotenv.config();
+
 // ---------------------------- instancias del servidor ----------------------------
 const app = express();
 const httpServer = createServer(app);
@@ -38,6 +44,24 @@ const mensajesSchema = new schema.Entity('posts', { mensajes: [mensajeSchema] },
 const normalizarMensajes = (msjConId) => normalize(msjConId, mensajesSchema)
 
 
+// ---------------------------- session pers en mongo ----------------------------
+
+const MongoStore = connectMongo.create({
+    mongoUrl: process.env.MONGO_URL,
+    ttl: 60
+})
+
+//Session setup
+
+app.use(session({
+    store: MongoStore,
+    secret: process.env.SECRET_KEY,
+    resave: true,
+    saveUninitialized: true
+}))
+
+
+
 // ---------------------------- Middlewares ----------------------------
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({extended: true}));
@@ -59,9 +83,40 @@ app.set('view engine', 'hbs');
 
 // ---------------------------- Rutas ----------------------------
 app.get('/', async (req, res) => {
-    const productos = await DB_PRODUCTOS.listarAll()
+    if (!req.session.nombre) {
+        
+        res.redirect('/login')
     
-    return res.render('vista', {productos})
+    } else {
+        const productos = await DB_PRODUCTOS.listarAll()
+        const username = req.session.nombre
+        return res.render('vista', {productos, username})
+    }
+    
+});
+
+app.get('/login', async (req, res) =>{
+    return res.render('login')
+})
+
+app.post('/login', async (req, res) =>{
+    const {username} = req.body
+    req.session.nombre = username
+    res.redirect('/')
+})
+
+app.get('/logout', async (req, res) => {
+    
+    const username = req.session.nombre
+    req.session.destroy(err=>{
+        if(err){
+            res.json({err})
+        } else {
+            res.render('logout', {username})
+        }
+    }) 
+    
+    
 });
 
 app.get('/api/productos-test', (req, res) => {
@@ -122,9 +177,9 @@ io.on('connection', async (socket)=>{
 
 async function listarMensajesNormalizados() {
     const mensajesDB = await DB_MENSAJES.getAll()
-    console.log(mensajesDB)
+    
     const normalizados = normalizarMensajes({id: 'mensajes', mensajesDB})
-    console.log(normalizados)
+    
 
     return normalizados
 }
