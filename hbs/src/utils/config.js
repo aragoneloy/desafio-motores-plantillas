@@ -1,4 +1,4 @@
-export const config = {
+export default {
     db: {
         client: 'mysql',
         connection: {
@@ -7,5 +7,8 @@ export const config = {
             password: 'aragon',
             database: 'productos'
         }
+    },
+    atlas: {
+        strConn: `mongodb+srv://eloyaragon:d4CVjuFXaGRIbqjy@cluster0.gstcy4m.mongodb.net/ecommerce?retryWrites=true&w=majority`
     }
 }

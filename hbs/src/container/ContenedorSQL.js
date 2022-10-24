@@ -1,10 +1,11 @@
 import knex from 'knex';
-// const config  = require('../utils/config.js')
+import config from '../utils/config.js';
+
 
 
 export default class ContenedorSQL {
     constructor(tableName, config){
-        this.knexCli = knex(config.db);
+        this.knexCli = knex(config);
         this.tableName = tableName;
     }
 

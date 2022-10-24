@@ -8,12 +8,19 @@ import connectMongo from 'connect-mongo'
 import { createServer } from "http";
 import { Server } from "socket.io";
 import  ContenedorSQL  from './src/container/ContenedorSQL.js'
-import {config}  from './src/utils/config.js'
+import ContenedorArchivo from './src/container/ContenedorArchivo.js';
+import ContenedorMongoDb from './src/container/ContenedorMongoDb.js'; 
+import UsuariosDaoMongoDb from './src/daos/UsuariosDaoMongoDB.js';
+import config from './src/utils/config.js'
 import {configSQ3} from './src/utils/configSQ3.js'
 import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import generarObjetoRandom from './src/utils/objetoRandom.js';
-import ContenedorArchivo from './src/container/ContenedorArchivo.js';
+import bcrypt from 'bcrypt'
+
+import passport from "passport";
+import { Strategy } from "passport-local";
+
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
 
@@ -26,11 +33,11 @@ const io = new Server(httpServer, { /* options */ });
 
 
 //DB
-// const contenedor = new Contenedor('./DB/productos.json')
+const DB_USUARIOS = new UsuariosDaoMongoDb()
 
 const DB_MENSAJES = new ContenedorArchivo('./DB/mensajes.json')
 
-const DB_PRODUCTOS = new ContenedorSQL('productos', config)
+const DB_PRODUCTOS = new ContenedorSQL('productos', config.db)
 
 // ---------------------------- Normalizacion Mensajes ----------------------------
 import { normalize, schema } from 'normalizr'
@@ -48,7 +55,37 @@ const normalizarMensajes = (msjConId) => normalize(msjConId, mensajesSchema)
 
 const MongoStore = connectMongo.create({
     mongoUrl: process.env.MONGO_URL,
-    ttl: 60
+    
+})
+
+
+/*----------- passport -----------*/
+const LocalStrategy = Strategy;
+passport.use(new LocalStrategy(
+    async function(username, password, done) {
+        
+        const existeUsuario = await DB_USUARIOS.getByEmail(username)
+        
+        
+        if(!existeUsuario) {
+            return done(null, false)
+        } else {
+            const match = await verifyPass(existeUsuario, password)
+            if (!match) {
+                return done(null, false)
+            }
+            return done(null, existeUsuario);
+        }
+    }
+  ));
+
+passport.serializeUser((user, done) =>{
+    return done(null, user.email)
+})
+
+passport.deserializeUser(async (email, done) =>{
+    const existeUsuario = await DB_USUARIOS.getByEmail(email)
+    return done(null, existeUsuario)
 })
 
 //Session setup
@@ -56,10 +93,16 @@ const MongoStore = connectMongo.create({
 app.use(session({
     store: MongoStore,
     secret: process.env.SECRET_KEY,
-    resave: true,
-    saveUninitialized: true
-}))
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+        maxAge: 600000 //10 min
+    }
 
+    
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 
 
 // ---------------------------- Middlewares ----------------------------
@@ -77,21 +120,34 @@ app.engine('hbs', exphbs.engine({
 app.set('views', './views');
 app.set('view engine', 'hbs');
 
-
-
-
-
-// ---------------------------- Rutas ----------------------------
-app.get('/', async (req, res) => {
-    if (!req.session.nombre) {
-        
-        res.redirect('/login')
-    
+function isAuth(req, res, next) {
+    if(req.isAuthenticated()){
+        next()
     } else {
-        const productos = await DB_PRODUCTOS.listarAll()
-        const username = req.session.nombre
-        return res.render('vista', {productos, username})
+        res.redirect('/login')
     }
+}
+
+
+
+
+//----------- metodos de auth -----------
+async function generateHashPassword(password){
+    const hashPassword = await bcrypt.hash(password, 10)
+    return hashPassword
+}
+
+async function verifyPass(usuario, password){
+    const match = await bcrypt.compare(password, usuario.password);
+    return match
+}   
+// ---------------------------- Rutas ----------------------------
+app.get('/', isAuth, async (req, res) => {
+    console.log(`user ${req.user.email}`)
+    const productos = await DB_PRODUCTOS.listarAll()
+    const username = req.user.email
+    return res.render('vista', {productos, username})
+    
     
 });
 
@@ -99,25 +155,37 @@ app.get('/login', async (req, res) =>{
     return res.render('login')
 })
 
-app.post('/login', async (req, res) =>{
-    const {username} = req.body
-    req.session.nombre = username
-    res.redirect('/')
-})
+app.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect:'/login-error'} ))
 
 app.get('/logout', async (req, res) => {
-    
-    const username = req.session.nombre
-    req.session.destroy(err=>{
-        if(err){
-            res.json({err})
-        } else {
-            res.render('logout', {username})
-        }
-    }) 
-    
+    const username = req.user.email
+    req.logout(function(err) {
+        if (err) { return next(err); }
+        res.render('logout', {username})
+      });
     
 });
+
+app.get('/register', async (req, res) => {
+    return res.render('registro')
+})
+
+app.post('/register', async (req, res) => {
+    const { email, password } = req.body
+    const newUsuario = await DB_USUARIOS.getByEmail(email)
+    console.log(newUsuario)
+    if(newUsuario == undefined){
+        DB_USUARIOS.save({ email, password: await generateHashPassword(password)}) 
+        res.redirect('/login')
+    } else {
+       res.render('registro-error')
+    }
+    
+})
+
+app.get('/login-error', async (req, res) => {
+    return res.render('login-error')
+})
 
 app.get('/api/productos-test', (req, res) => {
     const CANT_PROD = 5
@@ -128,15 +196,6 @@ app.get('/api/productos-test', (req, res) => {
     }
     return res.render('testProductos', {objs})
 })
-// app.post('/productos', async (req, res) =>{
-//     // DB_PRODUCTOS.insertar(await req.body)
-    
-//     res.redirect('/')
-// })
-
-
-
-
 
 // ---------------------------- Servidor ----------------------------
 const PORT = 8080;
