@@ -1,14 +1,17 @@
+import dotenv from 'dotenv'
+dotenv.config();
+
 export default {
     db: {
         client: 'mysql',
         connection: {
             host: '127.0.0.1',
-            user: 'eloy',
-            password: 'aragon',
+            user: `${process.env.MYSQL_USER}`,
+            password: `${process.env.MYSQL_PASS}`,
             database: 'productos'
         }
     },
     atlas: {
-        strConn: `mongodb+srv://eloyaragon:d4CVjuFXaGRIbqjy@cluster0.gstcy4m.mongodb.net/ecommerce?retryWrites=true&w=majority`
+        strConn: `${process.env.MONGO_URL_ECOMMERCE}`
     }
 }

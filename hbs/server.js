@@ -17,9 +17,14 @@ import { fileURLToPath } from 'url'
 import { dirname } from 'path'
 import generarObjetoRandom from './src/utils/objetoRandom.js';
 import bcrypt from 'bcrypt'
-
+import minimist from 'minimist';
+import process from 'process';
 import passport from "passport";
 import { Strategy } from "passport-local";
+import util from 'util'
+import routerRandoms from './src/routes/randoms.routes.js';
+
+
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -42,6 +47,9 @@ const DB_PRODUCTOS = new ContenedorSQL('productos', config.db)
 // ---------------------------- Normalizacion Mensajes ----------------------------
 import { normalize, schema } from 'normalizr'
 
+
+
+
 const authorSchema = new schema.Entity('author', {}, {idAttribute: 'email'})
 
 const mensajeSchema = new schema.Entity('post', { author: authorSchema}, {idAttribute: 'id'})
@@ -54,7 +62,7 @@ const normalizarMensajes = (msjConId) => normalize(msjConId, mensajesSchema)
 // ---------------------------- session pers en mongo ----------------------------
 
 const MongoStore = connectMongo.create({
-    mongoUrl: process.env.MONGO_URL,
+    mongoUrl: process.env.MONGO_URL_SESSIONS,
     
 })
 
@@ -120,6 +128,8 @@ app.engine('hbs', exphbs.engine({
 app.set('views', './views');
 app.set('view engine', 'hbs');
 
+
+
 function isAuth(req, res, next) {
     if(req.isAuthenticated()){
         next()
@@ -141,6 +151,9 @@ async function verifyPass(usuario, password){
     const match = await bcrypt.compare(password, usuario.password);
     return match
 }   
+
+app.use('/api/randoms', routerRandoms);
+
 // ---------------------------- Rutas ----------------------------
 app.get('/', isAuth, async (req, res) => {
     console.log(`user ${req.user.email}`)
@@ -195,13 +208,41 @@ app.get('/api/productos-test', (req, res) => {
         objs.push(generarObjetoRandom())
     }
     return res.render('testProductos', {objs})
+});
+
+app.get('/info', async (req, res) => {
+    function print(obj) {
+        const argumentos = util.inspect(obj, {showHidden: false, depth: 12, colors: true})
+        
+        return argumentos
+    }
+    const processInfo = {
+        directory: process.cwd(),
+        processId: process.pid,
+        nodeVersion: process.version,
+        operatingSistem: process.platform,
+        memoryUsage: process.memoryUsage.rss(),
+        entryArgs: print(args)
+    }
+    console.log(processInfo)
+    return res.render('info', {processInfo})
 })
 
+
+// ---------------------------- MINIMIST ----------------------------
+
+let options = {alias: { p: 'puerto'}, default:{p: 8080}}
+let args = minimist(process.argv.slice(2), options)
+console.log(args.p)
+let PORT = args.p;
+
+
+
+
 // ---------------------------- Servidor ----------------------------
-const PORT = 8080;
 
 const server = httpServer.listen(PORT, () =>  {
-    console.log('servidor corriendo en el puerto 8080');
+    console.log(`servidor corriendo en el puerto ${PORT}`)
     
 } );
 
@@ -210,7 +251,6 @@ const server = httpServer.listen(PORT, () =>  {
 
 io.on('connection', async (socket)=>{
     console.log(`Nuevo cliente conectado! ${socket.id}`);
-    
     
     io.emit('from-server-mensajes', await listarMensajesNormalizados())
 
@@ -232,6 +272,7 @@ io.on('connection', async (socket)=>{
         
         io.emit('from-server-productos', productos)
     })
+
 })
 
 async function listarMensajesNormalizados() {
