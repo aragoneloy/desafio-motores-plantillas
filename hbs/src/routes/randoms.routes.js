@@ -1,11 +1,12 @@
 import express from 'express'
 import { fork } from 'child_process';
-
-
+import PORT from '../../server.js';
+import process from 'process';
 // ---------------------------- Child process ----------------------------
 const forkProcess = fork('./random.js')
 
 const routerRandoms = express.Router();
+
 
 routerRandoms.get('/', async (req, res) => {
     let {cant} = req.query
@@ -21,7 +22,7 @@ routerRandoms.get('/', async (req, res) => {
         console.log(msg)
         
     });
-    res.send('esperando proceso secundario...')
+    res.send(`Ruta especial en ${PORT} - PID ${process.pid} - ${new Date().toLocaleString()}`)
     
     
 });

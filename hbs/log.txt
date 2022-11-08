@@ -1,0 +1,432 @@
+
+
+info:    Forever processes running
+data:        uid  command                            script                                                                        forever pid   id logfile                         uptime
+data:    [0] f3yo "C:\Program Files\nodejs\node.exe" F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs\server.js 8082    16132   14140    C:\Users\Eloy\.forever\f3yo.log 0:0:3:10.245000000000005
+data:    [1] 8D6m "C:\Program Files\nodejs\node.exe" F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs\server.js -p 3000 14824   14776    C:\Users\Eloy\.forever\8D6m.log 0:0:1:28.447999999999993
+data:    [2] epX6 "C:\Program Files\nodejs\node.exe" F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs\server.js -p 3001 7628    17760    C:\Users\Eloy\.forever\epX6.log 0:0:1:16.019000000000005
+data:    [3] n6pW "C:\Program Files\nodejs\node.exe" F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs\server.js -p 3002 16284   12672    C:\Users\Eloy\.forever\n6pW.log 0:0:1:10.915999999999997
+
+
+
+C:\Users\Eloy>tasklist
+
+Nombre de imagen               PID Nombre de sesión Núm. de ses Uso de memor
+========================= ======== ================ =========== ============
+System Idle Process              0 Services                   0         8 KB
+System                           4 Services                   0     1,916 KB
+Registry                       172 Services                   0    47,224 KB
+smss.exe                       588 Services                   0     1,052 KB
+csrss.exe                      888 Services                   0     5,044 KB
+wininit.exe                    804 Services                   0     5,188 KB
+services.exe                  1028 Services                   0     9,028 KB
+lsass.exe                     1052 Services                   0    20,760 KB
+svchost.exe                   1196 Services                   0    27,924 KB
+fontdrvhost.exe               1224 Services                   0     2,380 KB
+svchost.exe                   1320 Services                   0    15,532 KB
+svchost.exe                   1368 Services                   0     7,524 KB
+svchost.exe                   1564 Services                   0     9,320 KB
+svchost.exe                   1612 Services                   0     4,956 KB
+svchost.exe                   1716 Services                   0    13,448 KB
+svchost.exe                   1736 Services                   0    14,200 KB
+svchost.exe                   1772 Services                   0    11,280 KB
+svchost.exe                   1796 Services                   0    18,396 KB
+svchost.exe                   1892 Services                   0     9,036 KB
+atiesrxx.exe                  2008 Services                   0     5,000 KB
+amdfendrsr.exe                2016 Services                   0     6,036 KB
+svchost.exe                   2032 Services                   0     7,756 KB
+AsusCertService.exe           1108 Services                   0    11,068 KB
+svchost.exe                   1696 Services                   0     6,160 KB
+svchost.exe                   2056 Services                   0     4,716 KB
+svchost.exe                   2180 Services                   0    10,812 KB
+svchost.exe                   2280 Services                   0     8,508 KB
+svchost.exe                   2416 Services                   0     5,492 KB
+svchost.exe                   2540 Services                   0    13,252 KB
+svchost.exe                   2548 Services                   0     4,508 KB
+svchost.exe                   2556 Services                   0     6,504 KB
+svchost.exe                   2636 Services                   0     8,868 KB
+svchost.exe                   2676 Services                   0     7,244 KB
+svchost.exe                   2684 Services                   0     6,644 KB
+Memory Compression            2724 Services                   0    81,276 KB
+svchost.exe                   2816 Services                   0    17,612 KB
+atkexComSvc.exe               2892 Services                   0    10,192 KB
+svchost.exe                   2916 Services                   0    16,780 KB
+svchost.exe                   2952 Services                   0    17,104 KB
+svchost.exe                   1700 Services                   0     7,368 KB
+WmiPrvSE.exe                  3192 Services                   0     9,432 KB
+svchost.exe                   3336 Services                   0    13,000 KB
+svchost.exe                   3528 Services                   0     7,224 KB
+svchost.exe                   3536 Services                   0     5,524 KB
+svchost.exe                   3544 Services                   0     8,824 KB
+svchost.exe                   3692 Services                   0     6,492 KB
+svchost.exe                   3808 Services                   0    16,944 KB
+svchost.exe                   3832 Services                   0    12,840 KB
+spoolsv.exe                   3880 Services                   0    12,200 KB
+svchost.exe                   3916 Services                   0    16,728 KB
+svchost.exe                   3948 Services                   0     6,640 KB
+svchost.exe                   3128 Services                   0    24,948 KB
+svchost.exe                   3312 Services                   0     4,900 KB
+svchost.exe                   2152 Services                   0     9,468 KB
+svchost.exe                   3140 Services                   0     6,432 KB
+svchost.exe                   2136 Services                   0    26,292 KB
+svchost.exe                   3356 Services                   0     6,840 KB
+svchost.exe                   3412 Services                   0     4,344 KB
+svchost.exe                   3416 Services                   0     4,688 KB
+svchost.exe                   3500 Services                   0    18,892 KB
+svchost.exe                   4268 Services                   0     5,244 KB
+MsMpEng.exe                   4328 Services                   0   243,720 KB
+ArmouryCrate.Service.exe      4356 Services                   0    27,664 KB
+RtkAudUService64.exe          4364 Services                   0     8,760 KB
+ROGLiveService.exe            4384 Services                   0    23,796 KB
+armsvc.exe                    4392 Services                   0     5,984 KB
+AsusFanControlService.exe     4400 Services                   0    11,540 KB
+LightingService.exe           4452 Services                   0    19,692 KB
+svchost.exe                   4496 Services                   0     3,980 KB
+svchost.exe                   4648 Services                   0     7,668 KB
+dasHost.exe                   4696 Services                   0    10,312 KB
+svchost.exe                   4740 Services                   0    11,380 KB
+svchost.exe                   5580 Services                   0     6,096 KB
+Aac3572DramHal_x86.exe        6024 Services                   0     8,496 KB
+NisSrv.exe                    1692 Services                   0    21,208 KB
+svchost.exe                   6212 Services                   0     5,596 KB
+svchost.exe                   6328 Services                   0     7,616 KB
+unsecapp.exe                  6364 Services                   0     5,772 KB
+svchost.exe                   6760 Services                   0     9,856 KB
+extensionCardHal_x86.exe      6964 Services                   0     7,920 KB
+AacKingstonDramHal_x86.ex     7008 Services                   0     7,760 KB
+csrss.exe                     7156 Console                    2     5,180 KB
+winlogon.exe                  6172 Console                    2     9,424 KB
+fontdrvhost.exe               6520 Console                    2    12,076 KB
+dwm.exe                       6600 Console                    2    72,620 KB
+atieclxx.exe                  6924 Console                    2    13,168 KB
+svchost.exe                   1020 Services                   0    22,392 KB
+svchost.exe                   6532 Services                   0     8,028 KB
+svchost.exe                   7688 Services                   0     5,136 KB
+BraveCrashHandler.exe         7436 Services                   0     1,536 KB
+BraveCrashHandler64.exe       7364 Services                   0       400 KB
+svchost.exe                   7512 Services                   0    19,556 KB
+SgrmBroker.exe                1824 Services                   0     8,532 KB
+svchost.exe                   2336 Services                   0    11,276 KB
+svchost.exe                   4136 Services                   0    11,584 KB
+SearchIndexer.exe             4488 Services                   0    50,440 KB
+svchost.exe                   8176 Services                   0    19,964 KB
+ArmouryCrate.UserSessionH     4236 Console                    2    48,292 KB
+conhost.exe                   2072 Console                    2     5,732 KB
+sihost.exe                    8184 Console                    2    27,812 KB
+svchost.exe                   5512 Console                    2    27,664 KB
+svchost.exe                   1860 Console                    2    40,264 KB
+taskhostw.exe                 8004 Console                    2    17,404 KB
+explorer.exe                  4856 Console                    2   150,240 KB
+svchost.exe                   6664 Services                   0     8,152 KB
+ctfmon.exe                    6392 Console                    2    22,876 KB
+svchost.exe                   7504 Console                    2    22,924 KB
+svchost.exe                   7108 Console                    2    23,796 KB
+svchost.exe                   6240 Services                   0     6,012 KB
+StartMenuExperienceHost.e     6176 Console                    2    80,436 KB
+RuntimeBroker.exe             1580 Console                    2    25,460 KB
+SearchApp.exe                 7196 Console                    2   228,540 KB
+RuntimeBroker.exe             7420 Console                    2    44,256 KB
+svchost.exe                   8372 Services                   0    14,088 KB
+RuntimeBroker.exe             8968 Console                    2    22,240 KB
+svchost.exe                   9252 Services                   0    18,688 KB
+PhoneExperienceHost.exe       9780 Console                    2   128,152 KB
+RuntimeBroker.exe            10016 Console                    2    15,948 KB
+ShellExperienceHost.exe       9852 Console                    2    45,536 KB
+TextInputHost.exe            10100 Console                    2    42,976 KB
+SecurityHealthSystray.exe    10328 Console                    2     9,544 KB
+SecurityHealthService.exe    10364 Services                   0    17,488 KB
+RtkAudUService64.exe         10480 Console                    2     8,524 KB
+OneDrive.exe                 10532 Console                    2    72,268 KB
+CCXProcess.exe               10748 Console                    2     3,472 KB
+node.exe                     10764 Console                    2    60,240 KB
+conhost.exe                  10772 Console                    2     8,336 KB
+utweb.exe                    10920 Console                    2    36,668 KB
+helper.exe                   11176 Console                    2    15,136 KB
+AdobeIPCBroker.exe           11240 Console                    2    10,160 KB
+steam.exe                     9676 Console                    2    81,992 KB
+slack.exe                     1556 Console                    2   110,028 KB
+svchost.exe                  11304 Services                   0     9,372 KB
+Lively.exe                   11336 Console                    2   117,888 KB
+Spotify.exe                  11484 Console                    2   133,244 KB
+slack.exe                    11532 Console                    2    29,496 KB
+slack.exe                    11636 Console                    2    72,872 KB
+slack.exe                    11680 Console                    2    45,220 KB
+slack.exe                    11932 Console                    2   173,056 KB
+Spotify.exe                  12200 Console                    2    18,300 KB
+Spotify.exe                  11480 Console                    2    85,516 KB
+svchost.exe                  11740 Services                   0    11,592 KB
+Spotify.exe                  10696 Console                    2    25,524 KB
+Spotify.exe                  12148 Console                    2    37,244 KB
+backgroundTaskHost.exe       12524 Console                    2    12,560 KB
+RuntimeBroker.exe            12572 Console                    2     6,984 KB
+Spotify.exe                  12784 Console                    2   123,248 KB
+RuntimeBroker.exe            12860 Console                    2    10,208 KB
+steamwebhelper.exe           12964 Console                    2    88,000 KB
+steamwebhelper.exe           13012 Console                    2    14,644 KB
+steamservice.exe             13048 Services                   0    13,328 KB
+steamwebhelper.exe           13168 Console                    2   110,020 KB
+steamwebhelper.exe            8868 Console                    2    30,928 KB
+RadeonSoftware.exe           13252 Console                    2    67,116 KB
+CPUMetricsServer.exe         14144 Console                    2     2,792 KB
+cncmd.exe                    13384 Console                    2     1,048 KB
+AMDRSServ.exe                13600 Console                    2    81,740 KB
+steamwebhelper.exe           12004 Console                    2    88,392 KB
+steamwebhelper.exe            8312 Console                    2    46,012 KB
+steamwebhelper.exe            4820 Console                    2   119,912 KB
+svchost.exe                   6784 Services                   0     6,016 KB
+ApplicationFrameHost.exe     14292 Console                    2    31,756 KB
+HxOutlook.exe                10760 Console                    2     1,276 KB
+RuntimeBroker.exe            13256 Console                    2    20,304 KB
+HxTsr.exe                     9008 Console                    2    21,724 KB
+SystemSettings.exe            1712 Console                    2     1,328 KB
+SearchApp.exe                12720 Console                    2   389,196 KB
+dllhost.exe                  11512 Console                    2    14,176 KB
+Code.exe                      9308 Console                    2    96,220 KB
+Code.exe                     14288 Console                    2    25,812 KB
+Code.exe                     13516 Console                    2   129,552 KB
+Code.exe                      3428 Console                    2    41,176 KB
+Code.exe                     11380 Console                    2   252,716 KB
+chrome.exe                    6112 Console                    2   235,420 KB
+chrome.exe                   11844 Console                    2     7,488 KB
+chrome.exe                   13248 Console                    2   276,172 KB
+chrome.exe                   11624 Console                    2    51,720 KB
+chrome.exe                   12040 Console                    2    20,740 KB
+chrome.exe                    2860 Console                    2   108,044 KB
+chrome.exe                    2868 Console                    2   136,212 KB
+chrome.exe                    7160 Console                    2    65,244 KB
+chrome.exe                    1916 Console                    2   140,640 KB
+Code.exe                      3068 Console                    2   167,396 KB
+Code.exe                      3332 Console                    2   102,676 KB
+Code.exe                     11784 Console                    2    87,772 KB
+Code.exe                     12212 Console                    2    77,512 KB
+conhost.exe                  13460 Console                    2     6,036 KB
+powershell.exe                4676 Console                    2    67,992 KB
+Code.exe                      2112 Console                    2   123,572 KB
+Code.exe                     14016 Console                    2   183,420 KB
+Code.exe                     11520 Console                    2    89,364 KB
+Code.exe                     10580 Console                    2    97,684 KB
+AMDRSSrcExt.exe              14368 Console                    2    52,032 KB
+QtWebEngineProcess.exe        8188 Console                    2    25,312 KB
+chrome.exe                    9300 Console                    2   191,284 KB
+chrome.exe                   14644 Console                    2    61,472 KB
+xampp-control.exe            15128 Console                    2    21,752 KB
+httpd.exe                    12596 Console                    2    19,440 KB
+conhost.exe                  14024 Console                    2    12,824 KB
+httpd.exe                     8960 Console                    2    23,592 KB
+mysqld.exe                    9340 Console                    2    44,600 KB
+conhost.exe                   1956 Console                    2     6,196 KB
+powershell.exe                8648 Console                    2    74,184 KB
+chrome.exe                   17072 Console                    2    80,212 KB
+UserOOBEBroker.exe           17044 Console                    2     9,416 KB
+Code.exe                     17896 Console                    2   111,812 KB
+chrome.exe                   17464 Console                    2   159,340 KB
+svchost.exe                   9792 Services                   0    22,236 KB
+chrome.exe                    4916 Console                    2    22,544 KB
+audiodg.exe                  18332 Services                   0    12,128 KB
+cmd.exe                      18352 Console                    2     4,276 KB
+conhost.exe                  13004 Console                    2    19,756 KB
+node.exe                     16132 Console                    2    36,940 KB
+node.exe                     14140 Console                    2    82,544 KB
+node.exe                     16732 Console                    2    27,140 KB
+conhost.exe                  16664 Console                    2    16,660 KB
+svchost.exe                  15736 Services                   0     9,952 KB
+svchost.exe                   8416 Services                   0     8,428 KB
+node.exe                     14824 Console                    2    36,176 KB
+node.exe                     14776 Console                    2    82,132 KB
+node.exe                      6036 Console                    2    27,176 KB
+conhost.exe                  12752 Console                    2    16,776 KB
+node.exe                      7628 Console                    2    36,096 KB
+node.exe                     17760 Console                    2    77,472 KB
+node.exe                      1208 Console                    2    27,192 KB
+conhost.exe                  16280 Console                    2    16,508 KB
+node.exe                     16284 Console                    2    36,384 KB
+node.exe                     12672 Console                    2    77,464 KB
+chrome.exe                   14640 Console                    2    83,896 KB
+chrome.exe                   16072 Console                    2    17,648 KB
+chrome.exe                    7064 Console                    2   138,136 KB
+chrome.exe                    8396 Console                    2   134,132 KB
+svchost.exe                  17256 Services                   0    20,760 KB
+backgroundTaskHost.exe       14744 Console                    2    17,184 KB
+backgroundTaskHost.exe       18232 Console                    2    12,432 KB
+Video.UI.exe                 14312 Console                    2    48,240 KB
+RuntimeBroker.exe             7316 Console                    2    30,972 KB
+RuntimeBroker.exe             8856 Console                    2     8,472 KB
+RuntimeBroker.exe            12744 Console                    2     8,288 KB
+svchost.exe                  14856 Services                   0    17,556 KB
+svchost.exe                  17772 Services                   0    29,492 KB
+WmiPrvSE.exe                 14932 Services                   0    12,904 KB
+chrome.exe                    5684 Console                    2   127,808 KB
+chrome.exe                    6160 Console                    2    84,544 KB
+chrome.exe                   13348 Console                    2    61,648 KB
+svchost.exe                  16796 Services                   0    17,336 KB
+chrome.exe                   16956 Console                    2    33,696 KB
+backgroundTaskHost.exe        3600 Console                    2    15,448 KB
+RuntimeBroker.exe             6400 Console                    2     9,284 KB
+smartscreen.exe              18388 Console                    2    24,360 KB
+cmd.exe                      15692 Console                    2     4,488 KB
+conhost.exe                  18256 Console                    2    19,620 KB
+tasklist.exe                  6268 Console                    2     9,128 KB
+
+
+-------------------------- Forever //  LEVANTANDO SERVIDORES EN MODO WATCH --------------------
+
+PS F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs> forever start -w server.js -p 8082
+warn:    --minUptime not set. Defaulting to: 1000ms
+warn:    --spinSleepTime not set. Your script will exit if it does not stay up for at least 1000ms
+info:    Forever processing file: server.js
+(node:17752) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:17752) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+PS F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs> forever list
+(node:8856) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:8856) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+info:    Forever processes running
+data:        uid  command                            script                                                                        forever pid   id logfile                         uptime
+data:    [0] ED1b "C:\Program Files\nodejs\node.exe" F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs\server.js -p 8080 15120   15804    C:\Users\Eloy\.forever\ED1b.log 0:0:0:26.025
+data:    [1] pfz2 "C:\Program Files\nodejs\node.exe" F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs\server.js -p 8081 17836   7236     C:\Users\Eloy\.forever\pfz2.log 0:0:0:14.741
+data:    [2] uoCm "C:\Program Files\nodejs\node.exe" F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs\server.js -p 8082 8132    3380     C:\Users\Eloy\.forever\uoCm.log 0:0:0:7.729
+
+
+-------------------------- Forever //  DETENIENDO PROCESOS --------------------
+PS F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs> forever stopall
+(node:8140) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:8140) Warning: Accessing non-existent property 'padLevels' of module exports inside circular dependency
+info:    Forever stopped processes:
+data:        uid  command                            script                                                                        forever pid   id logfile                         uptime
+data:    [0] ED1b "C:\Program Files\nodejs\node.exe" F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs\server.js -p 8080 15120   16292    C:\Users\Eloy\.forever\ED1b.log 0:0:3:50.59899999999999
+data:    [1] pfz2 "C:\Program Files\nodejs\node.exe" F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs\server.js -p 8081 17836   15476    C:\Users\Eloy\.forever\pfz2.log 0:0:3:50.59899999999999
+data:    [2] uoCm "C:\Program Files\nodejs\node.exe" F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs\server.js -p 8082 8132    3264     C:\Users\Eloy\.forever\uoCm.log 0:0:3:50.59899999999999
+
+-------------------------- PM2 // LEVANTANDO SERVIDORES EN MODO WATCH --------------------
+PS F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs> pm2 start server.js --name="Server1" --watch     
+
+                        -------------
+
+__/\\\\\\\\\\\\\____/\\\\____________/\\\\____/\\\\\\\\\_____
+ _\/\\\/////////\\\_\/\\\\\\________/\\\\\\__/\\\///////\\\___
+  _\/\\\_______\/\\\_\/\\\//\\\____/\\\//\\\_\///______\//\\\__
+   _\/\\\\\\\\\\\\\/__\/\\\\///\\\/\\\/_\/\\\___________/\\\/___
+    _\/\\\/////////____\/\\\__\///\\\/___\/\\\________/\\\//_____
+     _\/\\\_____________\/\\\____\///_____\/\\\_____/\\\//________
+      _\/\\\_____________\/\\\_____________\/\\\___/\\\/___________
+       _\/\\\_____________\/\\\_____________\/\\\__/\\\\\\\\\\\\\\\_
+        _\///______________\///______________\///__\///////////////__
+
+
+                          Runtime Edition
+
+        PM2 is a Production Process Manager for Node.js applications
+                     with a built-in Load Balancer.
+
+                Start and Daemonize any application:
+                $ pm2 start app.js
+
+                Load Balance 4 instances of api.js:
+                $ pm2 start api.js -i 4
+
+                Monitor in production:
+                $ pm2 monitor
+
+                Make pm2 auto-boot at server restart:
+                $ pm2 startup
+
+                To go further checkout:
+                http://pm2.io/
+
+
+                        -------------
+
+[PM2] Spawning PM2 daemon with pm2_home=C:\Users\Eloy\.pm2
+[PM2] PM2 Successfully daemonized
+[PM2] Starting F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs\server.js in fork_mode (1 instance)
+[PM2] Done.
+┌─────┬────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id  │ name       │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├─────┼────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0   │ Server1    │ default     │ 1.0.0   │ fork    │ 16824    │ 0s     │ 0    │ online    │ 0%       │ 54.1mb   │ Eloy     │ enabled  │
+└─────┴────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴
+
+
+
+PS F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs> pm2 start server.js --name="Server CLUSTER1" --watch -i max -- -p 3000
+[PM2] Applying action restartProcessId on app [Server CLUSTER1](ids: [
+   1,  2,  3,  4,  5,  6,
+   7,  8,  9, 10, 11, 12,
+  13, 14, 15, 16
+])
+[PM2] [Server CLUSTER1](1) ✓
+[PM2] [Server CLUSTER1](2) ✓
+[PM2] [Server CLUSTER1](3) ✓
+[PM2] [Server CLUSTER1](4) ✓
+[PM2] [Server CLUSTER1](5) ✓
+[PM2] [Server CLUSTER1](6) ✓
+[PM2] [Server CLUSTER1](7) ✓
+[PM2] [Server CLUSTER1](8) ✓
+[PM2] [Server CLUSTER1](9) ✓
+[PM2] [Server CLUSTER1](10) ✓
+[PM2] [Server CLUSTER1](11) ✓
+[PM2] [Server CLUSTER1](12) ✓
+[PM2] [Server CLUSTER1](13) ✓
+[PM2] [Server CLUSTER1](14) ✓
+[PM2] [Server CLUSTER1](15) ✓
+[PM2] [Server CLUSTER1](16) ✓
+[PM2] Process successfully started
+┌─────┬────────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id  │ name               │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├─────┼────────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 1   │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 16640    │ 1s     │ 0    │ online    │ 0%       │ 33.2mb   │ Eloy     │ enabled  │
+│ 2   │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 9028     │ 1s     │ 0    │ online    │ 0%       │ 33.2mb   │ Eloy     │ enabled  │
+│ 3   │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 9240     │ 1s     │ 0    │ online    │ 0%       │ 33.3mb   │ Eloy     │ enabled  │
+│ 4   │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 13204    │ 1s     │ 0    │ online    │ 0%       │ 33.2mb   │ Eloy     │ enabled  │
+│ 5   │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 16280    │ 0s     │ 0    │ online    │ 0%       │ 33.1mb   │ Eloy     │ enabled  │
+│ 6   │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 15528    │ 0s     │ 0    │ online    │ 0%       │ 32.7mb   │ Eloy     │ enabled  │
+│ 7   │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 15228    │ 0s     │ 0    │ online    │ 0%       │ 33.1mb   │ Eloy     │ enabled  │
+│ 8   │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 15740    │ 0s     │ 0    │ online    │ 0%       │ 32.9mb   │ Eloy     │ enabled  │
+│ 9   │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 17916    │ 0s     │ 0    │ online    │ 0%       │ 32.8mb   │ Eloy     │ enabled  │
+│ 10  │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 10868    │ 0s     │ 0    │ online    │ 0%       │ 33.4mb   │ Eloy     │ enabled  │
+│ 11  │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 10652    │ 0s     │ 0    │ online    │ 0%       │ 33.2mb   │ Eloy     │ enabled  │
+│ 12  │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 14184    │ 0s     │ 0    │ online    │ 0%       │ 33.2mb   │ Eloy     │ enabled  │
+│ 13  │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 16608    │ 0s     │ 0    │ online    │ 0%       │ 33.3mb   │ Eloy     │ enabled  │
+│ 14  │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 10808    │ 0s     │ 0    │ online    │ 0%       │ 33.0mb   │ Eloy     │ enabled  │
+│ 15  │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 9156     │ 0s     │ 0    │ online    │ 0%       │ 32.8mb   │ Eloy     │ enabled  │
+│ 16  │ Server CLUSTER1    │ default     │ 1.0.0   │ cluster │ 1440     │ 0s     │ 0    │ online    │ 0%       │ 32.8mb   │ Eloy     │ enabled  │
+│ 0   │ Server1            │ default     │ 1.0.0   │ fork    │ 0        │ 0      │ 1    │ stopped   │ 0%       │ 0b       │ Eloy     │ disabled │
+
+
+
+PS F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs> pm2 stop 16   
+[PM2] Applying action stopProcessId on app [16](ids: [ '16' ])
+[PM2] [server cluster](16) ✓
+┌─────┬───────────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id  │ name              │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├─────┼───────────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0   │ server            │ default     │ 1.0.0   │ fork    │ 7472     │ 3m     │ 0    │ online    │ 0%       │ 83.8mb   │ Eloy     │ enabled  │
+│ 1   │ server cluster    │ default     │ 1.0.0   │ cluster │ 18320    │ 2m     │ 0    │ online    │ 0%       │ 31.2mb   │ Eloy     │ enabled  │
+│ 2   │ server cluster    │ default     │ 1.0.0   │ cluster │ 3188     │ 2m     │ 0    │ online    │ 0%       │ 30.7mb   │ Eloy     │ enabled  │
+│ 3   │ server cluster    │ default     │ 1.0.0   │ cluster │ 15616    │ 2m     │ 0    │ online    │ 0%       │ 31.1mb   │ Eloy     │ enabled  │
+│ 4   │ server cluster    │ default     │ 1.0.0   │ cluster │ 17436    │ 2m     │ 0    │ online    │ 0%       │ 31.1mb   │ Eloy     │ enabled  │
+│ 5   │ server cluster    │ default     │ 1.0.0   │ cluster │ 7900     │ 2m     │ 0    │ online    │ 0%       │ 31.9mb   │ Eloy     │ enabled  │
+│ 6   │ server cluster    │ default     │ 1.0.0   │ cluster │ 9428     │ 2m     │ 0    │ online    │ 0%       │ 31.1mb   │ Eloy     │ enabled  │
+│ 7   │ server cluster    │ default     │ 1.0.0   │ cluster │ 16272    │ 2m     │ 0    │ online    │ 0%       │ 31.5mb   │ Eloy     │ enabled  │
+│ 8   │ server cluster    │ default     │ 1.0.0   │ cluster │ 2872     │ 2m     │ 0    │ online    │ 0%       │ 31.5mb   │ Eloy     │ enabled  │
+│ 9   │ server cluster    │ default     │ 1.0.0   │ cluster │ 2412     │ 2m     │ 0    │ online    │ 0%       │ 31.1mb   │ Eloy     │ enabled  │
+│ 10  │ server cluster    │ default     │ 1.0.0   │ cluster │ 14944    │ 2m     │ 0    │ online    │ 0%       │ 31.7mb   │ Eloy     │ enabled  │
+│ 11  │ server cluster    │ default     │ 1.0.0   │ cluster │ 3272     │ 2m     │ 0    │ online    │ 0%       │ 31.1mb   │ Eloy     │ enabled  │
+│ 12  │ server cluster    │ default     │ 1.0.0   │ cluster │ 7284     │ 2m     │ 0    │ online    │ 0%       │ 31.8mb   │ Eloy     │ enabled  │
+│ 13  │ server cluster    │ default     │ 1.0.0   │ cluster │ 1436     │ 2m     │ 0    │ online    │ 0%       │ 31.6mb   │ Eloy     │ enabled  │
+│ 14  │ server cluster    │ default     │ 1.0.0   │ cluster │ 6160     │ 2m     │ 0    │ online    │ 0%       │ 30.9mb   │ Eloy     │ enabled  │
+│ 15  │ server cluster    │ default     │ 1.0.0   │ cluster │ 1508     │ 2m     │ 0    │ online    │ 0%       │ 31.2mb   │ Eloy     │ enabled  │
+│ 16  │ server cluster    │ default     │ 1.0.0   │ cluster │ 0        │ 0      │ 0    │ stopped   │ 0%       │ 0b       │ Eloy     │ disabled │
+└─────┴───────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
+
+
+-------------------------- PM2 no me permite pasar argumentos a node --------------------
+PS F:\CoderHouse\BackEnd\clases\desafio-motores-plantillas\hbs> pm2 start server.js --name="Server2" --watch -- 8081       
+[PM2] Done.
+┌─────┬────────────┬─────────────┬─────────┬─────────┬──────────┬────────┬──────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+│ id  │ name       │ namespace   │ version │ mode    │ pid      │ uptime │ ↺    │ status    │ cpu      │ mem      │ user     │ watching │
+├─────┼────────────┼─────────────┼─────────┼─────────┼──────────┼────────┼──────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+│ 0   │ Server2    │ default     │ 1.0.0   │ fork    │ 14296    │ 0s     │ 0    │ online    │ 0%       │ 35.3mb   │ Eloy     │ enabled  │
+└─────┴────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘

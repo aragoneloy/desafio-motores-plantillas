@@ -18,12 +18,15 @@ import { dirname } from 'path'
 import generarObjetoRandom from './src/utils/objetoRandom.js';
 import bcrypt from 'bcrypt'
 import minimist from 'minimist';
-import process from 'process';
+import process, { execPath } from 'process';
 import passport from "passport";
 import { Strategy } from "passport-local";
 import util from 'util'
 import routerRandoms from './src/routes/randoms.routes.js';
-
+import cluster from 'cluster';
+import os from 'os'
+import { normalize, schema } from 'normalizr'
+import { exec } from 'child_process';
 
 
 const __filename = fileURLToPath(import.meta.url)
@@ -36,250 +39,265 @@ const app = express();
 const httpServer = createServer(app);
 const io = new Server(httpServer, { /* options */ });
 
-
-//DB
-const DB_USUARIOS = new UsuariosDaoMongoDb()
-
-const DB_MENSAJES = new ContenedorArchivo('./DB/mensajes.json')
-
-const DB_PRODUCTOS = new ContenedorSQL('productos', config.db)
-
-// ---------------------------- Normalizacion Mensajes ----------------------------
-import { normalize, schema } from 'normalizr'
+const CPU_CORES = os.cpus().length 
+// ---------------------------- MINIMIST ----------------------------
+let options = {alias: { p: 'port', m: 'modo'}, default:{p: 8080, m: 'fork' }}
+let args = minimist(process.argv.slice(2), options)
+console.log(args.m)
+const PORT = args.p;
+let MODO = args.m;
+export default PORT;
 
 
-
-
-const authorSchema = new schema.Entity('author', {}, {idAttribute: 'email'})
-
-const mensajeSchema = new schema.Entity('post', { author: authorSchema}, {idAttribute: 'id'})
-
-const mensajesSchema = new schema.Entity('posts', { mensajes: [mensajeSchema] }, {idAttribute: 'id'})
-
-const normalizarMensajes = (msjConId) => normalize(msjConId, mensajesSchema)
-
-
-// ---------------------------- session pers en mongo ----------------------------
-
-const MongoStore = connectMongo.create({
-    mongoUrl: process.env.MONGO_URL_SESSIONS,
+if(cluster.isPrimary && MODO === 'cluster'){
     
-})
+    for (let i = 0; i < CPU_CORES; i++) {
+        cluster.fork();
+    }
+} else {
+    //DB
+    const DB_USUARIOS = new UsuariosDaoMongoDb()
+
+    const DB_MENSAJES = new ContenedorArchivo('./DB/mensajes.json')
+
+    const DB_PRODUCTOS = new ContenedorSQL('productos', config.db)
+
+    // ---------------------------- Normalizacion Mensajes ----------------------------
 
 
-/*----------- passport -----------*/
-const LocalStrategy = Strategy;
-passport.use(new LocalStrategy(
-    async function(username, password, done) {
+
+    const authorSchema = new schema.Entity('author', {}, {idAttribute: 'email'})
+
+    const mensajeSchema = new schema.Entity('post', { author: authorSchema}, {idAttribute: 'id'})
+
+    const mensajesSchema = new schema.Entity('posts', { mensajes: [mensajeSchema] }, {idAttribute: 'id'})
+
+    const normalizarMensajes = (msjConId) => normalize(msjConId, mensajesSchema)
+
+
+    // ---------------------------- session pers en mongo ----------------------------
+
+    const MongoStore = connectMongo.create({
+        mongoUrl: process.env.MONGO_URL_SESSIONS,
         
-        const existeUsuario = await DB_USUARIOS.getByEmail(username)
-        
-        
-        if(!existeUsuario) {
-            return done(null, false)
-        } else {
-            const match = await verifyPass(existeUsuario, password)
-            if (!match) {
+    })
+
+
+    /*----------- passport -----------*/
+    const LocalStrategy = Strategy;
+    passport.use(new LocalStrategy(
+        async function(username, password, done) {
+            
+            const existeUsuario = await DB_USUARIOS.getByEmail(username)
+            
+            
+            if(!existeUsuario) {
                 return done(null, false)
+            } else {
+                const match = await verifyPass(existeUsuario, password)
+                if (!match) {
+                    return done(null, false)
+                }
+                return done(null, existeUsuario);
             }
-            return done(null, existeUsuario);
+        }
+    ));
+
+    passport.serializeUser((user, done) =>{
+        return done(null, user.email)
+    })
+
+    passport.deserializeUser(async (email, done) =>{
+        const existeUsuario = await DB_USUARIOS.getByEmail(email)
+        return done(null, existeUsuario)
+    })
+
+    //Session setup
+
+    app.use(session({
+        store: MongoStore,
+        secret: process.env.SECRET_KEY,
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 600000 //10 min
+        }
+
+        
+    }))
+    app.use(passport.initialize())
+    app.use(passport.session())
+
+
+    // ---------------------------- Middlewares ----------------------------
+    app.use(express.static(path.join(__dirname, "public")));
+    app.use(express.urlencoded({extended: true}));
+
+    //motor de plantillas
+    app.engine('hbs', exphbs.engine({
+        defaultLayout: 'main',
+        layoutsDir: path.join(app.get('views'), 'layouts'),
+        partialsDir: path.join(app.get('views'), 'partials'),
+        extname: 'hbs'
+
+    }))
+    app.set('views', './views');
+    app.set('view engine', 'hbs');
+
+
+
+    function isAuth(req, res, next) {
+        if(req.isAuthenticated()){
+            next()
+        } else {
+            res.redirect('/login')
         }
     }
-  ));
 
-passport.serializeUser((user, done) =>{
-    return done(null, user.email)
-})
 
-passport.deserializeUser(async (email, done) =>{
-    const existeUsuario = await DB_USUARIOS.getByEmail(email)
-    return done(null, existeUsuario)
-})
 
-//Session setup
 
-app.use(session({
-    store: MongoStore,
-    secret: process.env.SECRET_KEY,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 600000 //10 min
+    //----------- metodos de auth -----------
+    async function generateHashPassword(password){
+        const hashPassword = await bcrypt.hash(password, 10)
+        return hashPassword
     }
 
-    
-}))
-app.use(passport.initialize())
-app.use(passport.session())
+    async function verifyPass(usuario, password){
+        const match = await bcrypt.compare(password, usuario.password);
+        return match
+    }   
 
+    app.use('/api/randoms', routerRandoms);
 
-// ---------------------------- Middlewares ----------------------------
-app.use(express.static(path.join(__dirname, "public")));
-app.use(express.urlencoded({extended: true}));
-
-//motor de plantillas
-app.engine('hbs', exphbs.engine({
-    defaultLayout: 'main',
-    layoutsDir: path.join(app.get('views'), 'layouts'),
-    partialsDir: path.join(app.get('views'), 'partials'),
-    extname: 'hbs'
-
-}))
-app.set('views', './views');
-app.set('view engine', 'hbs');
-
-
-
-function isAuth(req, res, next) {
-    if(req.isAuthenticated()){
-        next()
-    } else {
-        res.redirect('/login')
-    }
-}
-
-
-
-
-//----------- metodos de auth -----------
-async function generateHashPassword(password){
-    const hashPassword = await bcrypt.hash(password, 10)
-    return hashPassword
-}
-
-async function verifyPass(usuario, password){
-    const match = await bcrypt.compare(password, usuario.password);
-    return match
-}   
-
-app.use('/api/randoms', routerRandoms);
-
-// ---------------------------- Rutas ----------------------------
-app.get('/', isAuth, async (req, res) => {
-    console.log(`user ${req.user.email}`)
-    const productos = await DB_PRODUCTOS.listarAll()
-    const username = req.user.email
-    return res.render('vista', {productos, username})
-    
-    
-});
-
-app.get('/login', async (req, res) =>{
-    return res.render('login')
-})
-
-app.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect:'/login-error'} ))
-
-app.get('/logout', async (req, res) => {
-    const username = req.user.email
-    req.logout(function(err) {
-        if (err) { return next(err); }
-        res.render('logout', {username})
-      });
-    
-});
-
-app.get('/register', async (req, res) => {
-    return res.render('registro')
-})
-
-app.post('/register', async (req, res) => {
-    const { email, password } = req.body
-    const newUsuario = await DB_USUARIOS.getByEmail(email)
-    console.log(newUsuario)
-    if(newUsuario == undefined){
-        DB_USUARIOS.save({ email, password: await generateHashPassword(password)}) 
-        res.redirect('/login')
-    } else {
-       res.render('registro-error')
-    }
-    
-})
-
-app.get('/login-error', async (req, res) => {
-    return res.render('login-error')
-})
-
-app.get('/api/productos-test', (req, res) => {
-    const CANT_PROD = 5
-    let objs = []
-
-    for (let index = 0; index <= 5; index++){
-        objs.push(generarObjetoRandom())
-    }
-    return res.render('testProductos', {objs})
-});
-
-app.get('/info', async (req, res) => {
-    function print(obj) {
-        const argumentos = util.inspect(obj, {showHidden: false, depth: 12, colors: true})
+    // ---------------------------- Rutas ----------------------------
+    app.get('/', isAuth, async (req, res) => {
+        console.log(`user ${req.user.email}`)
+        const productos = await DB_PRODUCTOS.listarAll()
+        const username = req.user.email
+        return res.render('vista', {productos, username})
         
-        return argumentos
-    }
-    const processInfo = {
-        directory: process.cwd(),
-        processId: process.pid,
-        nodeVersion: process.version,
-        operatingSistem: process.platform,
-        memoryUsage: process.memoryUsage.rss(),
-        entryArgs: print(args)
-    }
-    console.log(processInfo)
-    return res.render('info', {processInfo})
-})
-
-
-// ---------------------------- MINIMIST ----------------------------
-
-let options = {alias: { p: 'puerto'}, default:{p: 8080}}
-let args = minimist(process.argv.slice(2), options)
-console.log(args.p)
-let PORT = args.p;
-
-
-
-
-// ---------------------------- Servidor ----------------------------
-
-const server = httpServer.listen(PORT, () =>  {
-    console.log(`servidor corriendo en el puerto ${PORT}`)
-    
-} );
-
-// ---------------------------- Websocket ----------------------------
-
-
-io.on('connection', async (socket)=>{
-    console.log(`Nuevo cliente conectado! ${socket.id}`);
-    
-    io.emit('from-server-mensajes', await listarMensajesNormalizados())
-
-    socket.on('from-client-mensaje', async mensaje => {
         
-        await DB_MENSAJES.save(mensaje);
+    });
 
-        
-        io.emit('from-server-mensajes', await listarMensajesNormalizados());
+    app.get('/login', async (req, res) =>{
+        console.log(`Ruta especial en ${PORT} - PID ${process.pid} - ${new Date().toLocaleString()}`)
+        return res.render('login')
     })
 
-    const productos = await DB_PRODUCTOS.listarAll()
-    
-    io.emit('from-server-productos', productos)
+    app.post('/login', passport.authenticate('local', {successRedirect: '/', failureRedirect:'/login-error'} ))
 
-    socket.on('from-client-producto', async producto =>{
+    app.get('/logout', async (req, res) => {
+        const username = req.user.email
+        req.logout(function(err) {
+            if (err) { return next(err); }
+            res.render('logout', {username})
+        });
         
-        DB_PRODUCTOS.insertar(await producto);
+    });
+
+    app.get('/register', async (req, res) => {
+        return res.render('registro')
+    })
+
+    app.post('/register', async (req, res) => {
+        const { email, password } = req.body
+        const newUsuario = await DB_USUARIOS.getByEmail(email)
+        console.log(newUsuario)
+        if(newUsuario == undefined){
+            DB_USUARIOS.save({ email, password: await generateHashPassword(password)}) 
+            res.redirect('/login')
+        } else {
+        res.render('registro-error')
+        }
+        
+    })
+
+    app.get('/login-error', async (req, res) => {
+        return res.render('login-error')
+    })
+
+    app.get('/api/productos-test', (req, res) => {
+        const CANT_PROD = 5
+        let objs = []
+
+        for (let index = 0; index <= 5; index++){
+            objs.push(generarObjetoRandom())
+        }
+        return res.render('testProductos', {objs})
+    });
+
+    app.get('/info', async (req, res) => {
+        function print(obj) {
+            const argumentos = util.inspect(obj, {showHidden: false, depth: 12, colors: true})
+            
+            return argumentos
+        }
+        const processInfo = {
+            directory: process.cwd(),
+            processId: process.pid,
+            nodeVersion: process.version,
+            operatingSistem: process.platform,
+            memoryUsage: process.memoryUsage.rss(),
+            entryArgs: print(args),
+            cpuNumber: CPU_CORES,
+            pathEjecucion: process.execPath,
+        }
+        console.log(processInfo)
+        return res.render('info', {processInfo})
+    })
+
+
+
+
+
+
+
+    // ---------------------------- Servidor ----------------------------c
+
+        const server = httpServer.listen(PORT, () =>  {
+        console.log(`servidor corriendo en el puerto ${PORT} - PID Worker ${process.pid}`)
+        } );
+
+
+
+
+    // ---------------------------- Websocket ----------------------------
+
+
+    io.on('connection', async (socket)=>{
+        console.log(`Nuevo cliente conectado! ${socket.id}`);
+        
+        io.emit('from-server-mensajes', await listarMensajesNormalizados())
+
+        socket.on('from-client-mensaje', async mensaje => {
+            
+            await DB_MENSAJES.save(mensaje);
+
+            
+            io.emit('from-server-mensajes', await listarMensajesNormalizados());
+        })
+
+        const productos = await DB_PRODUCTOS.listarAll()
         
         io.emit('from-server-productos', productos)
+
+        socket.on('from-client-producto', async producto =>{
+            
+            DB_PRODUCTOS.insertar(await producto);
+            
+            io.emit('from-server-productos', productos)
+        })
+
     })
 
-})
+    async function listarMensajesNormalizados() {
+        const mensajesDB = await DB_MENSAJES.getAll()
+        
+        const normalizados = normalizarMensajes({id: 'mensajes', mensajesDB})
+        
 
-async function listarMensajesNormalizados() {
-    const mensajesDB = await DB_MENSAJES.getAll()
-    
-    const normalizados = normalizarMensajes({id: 'mensajes', mensajesDB})
-    
+        return normalizados
+    }
 
-    return normalizados
 }
