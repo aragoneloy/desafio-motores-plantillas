@@ -1,0 +1,6 @@
+{"level":"info","message":"Ruta: /login, metodo: GET"}
+{"level":"warn","message":"Ruta GET /favicon.ico no implementada"}
+{"level":"info","message":"Ruta: /, metodo: GET"}
+{"level":"warn","message":"Ruta GET /favicon.ico no implementada"}
+{"level":"info","message":"Ruta: /?title=Trombon&price=2345&thumbnail=https%3A%2F%2Fcdn3.iconfinder.com%2Fdata%2Ficons%2Feducation-209%2F64%2Fcalculator-math-tool-school-512.png, metodo: GET"}
+{"level":"warn","message":"Ruta GET /favicon.ico no implementada"}

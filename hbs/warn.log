@@ -1,0 +1,6 @@
+{"level":"error","message":"Error en api productos: Error: connect ECONNREFUSED 127.0.0.1:3306 "}
+{"level":"warn","message":"Ruta GET /favicon.ico no implementada"}
+{"level":"warn","message":"Ruta GET /favicon.ico no implementada"}
+{"level":"warn","message":"Ruta GET /favicon.ico no implementada"}
+{"level":"error","message":"Error en api productos: Error: connect ECONNREFUSED 127.0.0.1:3306 "}
+{"level":"error","message":"Error en api productos: Error: connect ECONNREFUSED 127.0.0.1:3306 "}

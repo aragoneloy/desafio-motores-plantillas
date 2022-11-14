@@ -1,5 +1,6 @@
 import fs from 'fs/promises';
 import moment from 'moment'; 
+import {logger} from '../utils/logger.config.js'
 
 export default class ContenedorArchivo {
     constructor(ruta) {
@@ -13,6 +14,7 @@ export default class ContenedorArchivo {
             return JSON.parse(objs); 
         
         } catch (error) {
+            logger.error(`Error en api mensajes: ${error} `);
             return [];
         }
     } 
@@ -30,6 +32,7 @@ export default class ContenedorArchivo {
             }
            
         } catch (error) {
+            logger.error(`Error en api mensajes: ${error} `);
             return 'Error';
         }
 
@@ -44,6 +47,7 @@ export default class ContenedorArchivo {
             return objRandom;
            
         } catch (error) {
+            logger.error(`Error en api mensajes: ${error} `);
             return 'Error';
         }
 
@@ -67,7 +71,8 @@ export default class ContenedorArchivo {
             return newObj;
         }
         catch (error) {
-            console.log(error);
+
+            logger.error(`Error en api mensajes: ${error} `);
         }
     }
    
@@ -83,6 +88,7 @@ export default class ContenedorArchivo {
                 return 'elemento eliminado';
             }
         } catch (error){
+            logger.error(`Error en api mensajes: ${error} `);
             return 'No se pudo eliminar';
         }        
         
@@ -101,6 +107,7 @@ export default class ContenedorArchivo {
             }
             return {id, ...newObj};
         } catch (error){
+            logger.error(`Error en api mensajes: ${error} `);
             return 'No se pudo actualizar';
         }        
         
@@ -112,6 +119,7 @@ export default class ContenedorArchivo {
             await fs.writeFile(this.ruta, JSON.stringify(objs, null, 2));
             return 'elementos eliminados';
         } catch (error) {
+            logger.error(`Error en api mensajes: ${error} `);
             return 'No se pudo eliminar';
         }
         

@@ -1,5 +1,6 @@
 import knex from 'knex';
 import config from '../utils/config.js';
+import {logger} from '../utils/logger.config.js'
 
 
 
@@ -13,6 +14,7 @@ export default class ContenedorSQL {
         try {
             return await this.knexCli.from(this.tableName).select('*')
         } catch (error) {
+            logger.error(`Error en api productos: ${error} `);
             throw error; 
         }
         
@@ -22,6 +24,7 @@ export default class ContenedorSQL {
         try {
             return await this.knexCli.from(this.tableName).select('*').where({id: id})
         } catch (error) {
+            logger.error(`Error en api mensajes: ${error} `);
             throw error; 
         }
     }
@@ -30,6 +33,7 @@ export default class ContenedorSQL {
         try {
             return await this.knexCli(this.tableName).insert(obj)
         } catch (error) {
+            logger.error(`Error en api mensajes: ${error} `);
            throw error; 
         }
         
@@ -39,6 +43,7 @@ export default class ContenedorSQL {
         try {
             return await this.knexCli.from(this.tableName).where({id: id}).update(obj)
         } catch (error) {
+            logger.error(`Error en api mensajes: ${error} `);
             throw error
         }
     }
@@ -47,6 +52,7 @@ export default class ContenedorSQL {
         try {
             return await this.knexCli.from(this.tableName).where({id: id}).del();
         } catch (error) {
+            logger.error(`Error en api mensajes: ${error} `);
             throw error;
         }
 

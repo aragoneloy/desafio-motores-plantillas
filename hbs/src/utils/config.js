@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 dotenv.config();
 
-export default {
+export default  {
     db: {
         client: 'mysql',
         connection: {
@@ -13,5 +13,6 @@ export default {
     },
     atlas: {
         strConn: `${process.env.MONGO_URL_ECOMMERCE}`
-    }
+    },
+    env: process.env.NODE_ENV
 }

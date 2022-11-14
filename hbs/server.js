@@ -27,6 +27,9 @@ import cluster from 'cluster';
 import os from 'os'
 import { normalize, schema } from 'normalizr'
 import { exec } from 'child_process';
+import compression from 'compression';
+import {logger} from './src/utils/logger.config.js';
+import morgan from 'morgan';
 
 
 const __filename = fileURLToPath(import.meta.url)
@@ -154,7 +157,23 @@ if(cluster.isPrimary && MODO === 'cluster'){
         }
     }
 
-
+    let logInfo = {
+        write: function (text) {
+            logger.info(text);
+        }
+    };
+    
+    app.use(morgan('combined', { stream: logInfo }));
+    
+    let logErrors = {
+        write: function (text) {
+            logger.error(text);
+        }
+    };
+    morgan('combined', { 
+        stream: logErrors,
+        skip: function (req, res) { return res.statusCode < 400}
+      })
 
 
     //----------- metodos de auth -----------
@@ -168,19 +187,23 @@ if(cluster.isPrimary && MODO === 'cluster'){
         return match
     }   
 
-    app.use('/api/randoms', routerRandoms);
+    // app.use('/api/randoms', routerRandoms);
 
     // ---------------------------- Rutas ----------------------------
     app.get('/', isAuth, async (req, res) => {
-        console.log(`user ${req.user.email}`)
+  
+        // const { url, method } = req
+        // logger.info(`Ruta: ${url}, metodo: ${method}`)
         const productos = await DB_PRODUCTOS.listarAll()
         const username = req.user.email
-        return res.render('vista', {productos, username})
-        
+            
+        return res.render('vista', {productos, username}) 
         
     });
 
     app.get('/login', async (req, res) =>{
+        // const { url, method } = req
+        // logger.info(`Ruta: ${url}, metodo: ${method}`)
         console.log(`Ruta especial en ${PORT} - PID ${process.pid} - ${new Date().toLocaleString()}`)
         return res.render('login')
     })
@@ -189,6 +212,8 @@ if(cluster.isPrimary && MODO === 'cluster'){
 
     app.get('/logout', async (req, res) => {
         const username = req.user.email
+        // const { url, method } = req
+        // logger.info(`Ruta: ${url}, metodo: ${method}`)
         req.logout(function(err) {
             if (err) { return next(err); }
             res.render('logout', {username})
@@ -197,10 +222,14 @@ if(cluster.isPrimary && MODO === 'cluster'){
     });
 
     app.get('/register', async (req, res) => {
+        // const { url, method } = req
+        // logger.info(`Ruta: ${url}, metodo: ${method}`)
         return res.render('registro')
     })
 
     app.post('/register', async (req, res) => {
+        // const { url, method } = req
+        // logger.info(`Ruta: ${url}, metodo: ${method}`)
         const { email, password } = req.body
         const newUsuario = await DB_USUARIOS.getByEmail(email)
         console.log(newUsuario)
@@ -214,10 +243,14 @@ if(cluster.isPrimary && MODO === 'cluster'){
     })
 
     app.get('/login-error', async (req, res) => {
+        // const { url, method } = req
+        // logger.info(`Ruta: ${url}, metodo: ${method}`)
         return res.render('login-error')
     })
 
     app.get('/api/productos-test', (req, res) => {
+        // const { url, method } = req
+        // logger.info(`Ruta: ${url}, metodo: ${method}`)
         const CANT_PROD = 5
         let objs = []
 
@@ -227,7 +260,9 @@ if(cluster.isPrimary && MODO === 'cluster'){
         return res.render('testProductos', {objs})
     });
 
-    app.get('/info', async (req, res) => {
+    app.get('/info', compression(), async (req, res) => {
+        // const { url, method } = req
+        // logger.info(`Ruta: ${url}, metodo: ${method}`)
         function print(obj) {
             const argumentos = util.inspect(obj, {showHidden: false, depth: 12, colors: true})
             
@@ -247,7 +282,12 @@ if(cluster.isPrimary && MODO === 'cluster'){
         return res.render('info', {processInfo})
     })
 
-
+    // app.get('*', (req, res) => {
+    //     const { url, method } = req
+    //     // logger.warn(`Ruta ${method} ${url} no implementada`)
+    //     res.send(`Ruta ${method} ${url} no está implementada`)
+    // })
+    
 
 
 
